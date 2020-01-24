@@ -1,0 +1,9 @@
+{% extends "common.html" %}
+{% from "bootstrap/form.html" import render_form %}
+
+
+{% block common_content %}
+   <h2>Login</h2>
+   {{ render_form(form) }}
+   <p>New User? <a href="{{ url_for('auth.register') }}">Sign Up!</a></p>
+{% endblock %}

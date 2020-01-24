@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+   <div class="col-12 mb-4 mx-auto text-center">
+      <h1 id="blogs_">All Blogs</h1>
+      <p class="line text-center mx-auto" style="border-bottom: 2px solid; border-color: #f03;"></p>
+   </div>
+   <div class="col-12 mb-3" id="show_article">
+      {% for post in posts %}
+      {% include "posts.html" %}
+      {% endfor %}
+   </div>
+
+{% endblock %}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
+   {% if title %}
+   <title>{{ title }} | Deca-Blog</title>
+   {% else %}
+   <title>Deca-Blog | Latest articles in tech</title>
+   {% endif %}
+   <style>
+   * {
+      font-family: 'Righteous', cursive;
+	}
+	p.line {
+		content: ' ';
+		width: 15%;
+	}
+   #newsletter {
+      background-color: darkgrey;
+      padding: 9%;
+   }
+   a.d-inline-block {
+      color: #000;
+   }
+   a.d-inline-block#fbk {
+      color: #3b5998;
+   }
+   a.d-inline-block#twt {
+      color: #1DA1F2;
+   }
+   a.d-inline-block#yt {
+      color: #c4302b;
+   }
+   a.d-inline-block#inst {
+      color: #8a3ab9;
+   }
+   a.d-inline-block#link {
+      color: #0e76a8;
+   }
+   #copy {
+      background-color: #000;
+	}
+	@media screen and (max-width: 425px){
+		ul.navbar-nav li.nav-item a {
+			text-align: center;
+		}
+		ul.navbar-nav li.nav-item {
+			margin-bottom: 2%;
+			width: 50%;
+			margin-left: 25%;
+		}
+	}
+   </style>
+</head>
+<body>
+   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top mb-3">
+		<a href="{{ url_for('main.index') }}" class="navbar-brand">
+			<h3 class="m-2">DECA-BLOG</h3>
+		</a>
+		<button class="navbar-toggler" data-toggle="collapse" data-target="#links">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div id="links" class="collapse navbar-collapse mr-3">
+			<ul class="navbar-nav nav-pills ml-auto">
+            {% if current_user.is_anonymous %}
+				<li class="nav-item">
+					<a class="nav-link text-white btn-primary" href="{{ url_for('auth.login') }}">Login</a>
+            </li>
+            {% elif current_user.username == 'admin' %}
+            <li class="nav-item mr-3">
+					<a class="nav-link text-white btn-success" href="{{ url_for('auth.create_post') }}">Create Post</a>
+            </li>
+            <li class="nav-item mr-3">
+					<a class="nav-link text-white btn-warning" href="{{ url_for('auth.delete_post') }}">Delete Post</a>
+            </li>
+            <li class="nav-item">
+					<a class="nav-link text-white btn-danger" href="{{ url_for('auth.logout') }}">Logout</a>
+				</li>
+            {% else %}
+            <li class="nav-item mr-3">
+					<a class="nav-link text-white btn-success" href="{{ url_for('auth.create_post') }}">Create Post</a>
+            </li>
+            <li class="nav-item">
+					<a class="nav-link text-white btn-danger" href="{{ url_for('auth.logout') }}">Logout</a>
+				</li>
+            {% endif %}
+			</ul>
+		</div>
+   </nav>
+
+	<!-- Pop-up notification display -->
+	<!-- try styling the below with a good margin-top figure for display -->
+   {% with messages=get_flashed_messages() %}
+      {% if messages %}
+         <ul class="list-group mt-5">
+            {% for msg in messages %}
+            <li class="list-group-item list-group-item-info">{{ msg }}</li>
+            {% endfor %}
+         </ul>
+      {% endif %}
+   {% endwith %}
+      
+	<!-- Recent blog posts section -->
+	<div class="container" style="margin-top: 100px;">
+		<div class="row mx-auto" style="width: 80%">
+			{% block app_content %} {% endblock %}
+		</div>
+   </div>
+   
+	<!-- Subscribe section -->
+	<div class="container-fluid mt-5" id="newsletter">
+		<div class="row mx-auto">
+			<div class="col-sm-6">
+				<h4 class="text-uppercase py-5 my-5 text-center text-white">lorem ipsum dolor sit amet consectetur isit depicit?</h4>
+			</div>
+			<div class="col-sm-6">
+				<form>
+					<div class="form-group mb-4">
+						<label for="fullname" class="text-white">Your Name:</label>
+						<input type="text" class="form-control form-control-lg" id="fullname" placeholder="Your Fullname">
+					</div>
+					<div class="form-group">
+						<label for="email_add" class="text-white">Email:</label>
+						<input type="email" class="form-control form-control-lg" id="email_add" placeholder="name@example.com">
+					</div>
+					<button class="btn btn-lg btn-danger btn-block">LOREM MOI</button>
+				</form>
+			</div>
+		</div>
+   </div>
+   
+	<!-- Footer section -->
+	<div class="container-fluid bg-light p-5">
+		<div class="row">
+			<div class="col-sm-4">
+				<h4 class="text-uppercase">who owns deca-blog?</h4>
+				<p class="line mb-4" style="border-bottom: 2px solid #fff; border-color: #f03; width: 40%;"></p>
+				<img class="rounded float-left mx-4" src="../static/owner.JPG" width="100" height="100">
+				<p class="text-justify small">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia aspernatur ipsam deserunt sit, nesciunt odio nisi assumenda sed dolorem ipsum id aliquid doloremque aliquam exercitationem quam.
+					Nesciunt odio nisi assumenda sed dolorem ipsum id aliquid doloremque aliquam exercitationem quam.
+				</p>
+			</div>
+			<div class="col-sm-4">
+				<p class="m-2 text-white"></p>
+			</div>
+			<div class="col-sm-4 text-center">
+				<h5 class="mb-4">Follow us:</h5>
+				<a href="javascript:void(0);" class="d-inline-block mr-1" id="fbk"><i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+				<a href="javascript:void(0);" class="d-inline-block mr-1" id="twt"><i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+				<a href="javascript:void(0);" class="d-inline-block mr-1" id="yt"><i class="fab fa-youtube fa-2x" aria-hidden="true"></i></a>
+				<a href="javascript:void(0);" class="d-inline-block mr-1" id="inst"><i class="fab fa-instagram fa-2x" aria-hidden="true"></i></a>
+				<a href="javascript:void(0);" class="d-inline-block" id="link"><i class="fab fa-linkedin fa-2x" aria-hidden="true"></i></a>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12" id="copy">
+				<p class="mb-0 p-2 text-danger text-center">Copyright &copy; 2020</p>
+			</div>
+		</div>
+	</div>
+
+{% block scripts %}
+{{ moment.include_moment() }}
+{% endblock %}
+</body>
+</html>

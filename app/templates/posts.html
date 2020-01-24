@@ -1,0 +1,8 @@
+<div class="card mb-3">
+   <div class="card-body">
+      <h3 class="card-title">{{ post.title }}</h3>
+      <span class="small"><em>Written by: {{ post.author.username }}</em> on {{ moment(post.timestamp).format('LL') }}</span>
+      <p>{{ post.shorten_txt() }}</p>
+      <p><a href="{{ url_for('auth.article', title=post.title) }}">Read More</a>{% if current_user.username == "admin" %} | <a href="{{ url_for('auth.update_post', id=post.id) }}">Update Post</a>{% endif %}</p>
+   </div>
+</div>

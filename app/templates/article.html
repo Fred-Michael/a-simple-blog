@@ -1,0 +1,41 @@
+{% extends "articlebase.html" %}
+{% from "bootstrap/form.html" import render_form %}
+
+{% block article_content %}
+<div class="container">
+   <div class="row mx-auto" style="width: 80%">
+      <div class="col-12 mb-3">
+         <div class="card text-center">
+            <div class="card-body">
+               <h3 class="card-title">{{ post.title }}</h3>
+            </div>
+         </div>
+      </div>
+      
+      <div class="col-12 mb-3">
+         <div class="card-text">
+            <span style="text-align: right; display: inline-block;" class="mb-4 small"><em>Written by: {{ post.author.username }}</em> on {{ moment(post.timestamp).format('LL') }}</span>
+            <p style="text-align: justify;">{{ post.body }}</p>
+         </div>
+      </div>
+   </div>
+   <hr>
+   <!-- Comment section -->
+   {% if current_user.is_authenticated %}
+   <div class="row mt-3" style="width: 80%;">
+      <div class="col-12">
+         <h3 class="d-inline-block">Comments</h3>
+      </div>
+      <div class="col-12 mb-5">
+         {{ render_form(addcomment) }}
+      </div>
+   {% endif %}
+      <div class="col-12" id="comment_area">
+         {% for statement in dbcomments %}
+         <p><img src="{{ statement.author.avatar(40) }}" alt="{{ statement.author.username }}"> {{ statement.author.username}} said: {{ statement.saying }} | <em>{{ moment(statement.comment_tmestp).fromNow() }}</em></p>
+         <hr>
+         {% endfor %}
+      </div>
+   </div>
+</div>
+{% endblock %}
